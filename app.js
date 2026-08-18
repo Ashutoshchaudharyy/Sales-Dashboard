@@ -136,8 +136,25 @@ function formatIndianRupees(val) {
 // Parse .env file
 async function loadEnv() {
   try {
+    // 1. Try to load config.json (used on Vercel deployment)
+    try {
+      const response = await fetch('config.json');
+      if (response.ok) {
+        const config = await response.json();
+        supabaseUrl = config.SUPABASE_URL || '';
+        supabaseKey = config.SUPABASE_ANON_KEY || '';
+        if (supabaseUrl && supabaseKey) {
+          console.log('Loaded credentials from config.json');
+          return;
+        }
+      }
+    } catch (e) {
+      console.log('config.json not found, falling back to local .env file');
+    }
+
+    // 2. Fallback to reading .env (used for local development)
     const response = await fetch('.env');
-    if (!response.ok) throw new Error('Could not find .env file');
+    if (!response.ok) throw new Error('Could not find config.json or .env file');
     
     const text = await response.text();
     const env = {};
@@ -156,11 +173,12 @@ async function loadEnv() {
     supabaseKey = env.SUPABASE_ANON_KEY || '';
 
     if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Supabase URL or Key missing in .env');
+      throw new Error('Supabase URL or Key missing in configuration');
     }
+    console.log('Loaded credentials from local .env');
   } catch (error) {
     console.error('Error loading config:', error);
-    alert('Failed to load credentials from .env. Please check the file.');
+    alert('Failed to load credentials from config.json or .env. Please check your setup.');
   }
 }
 
