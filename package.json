@@ -1,0 +1,12 @@
+{
+  "name": "veloce-sim-sales-dashboard",
+  "version": "1.0.0",
+  "description": "Veloce SIM - Global Sales Intelligence Dashboard",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server ./ -p 5000 -c-1",
+    "dev": "npx http-server ./ -p 5000 -c-1"
+  },
+  "author": "Antigravity",
+  "license": "ISC"
+}

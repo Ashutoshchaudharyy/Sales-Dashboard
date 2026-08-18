@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>International SIM Sales Dashboard</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- ApexCharts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="styles.css?v=5">
+</head>
+<body>
+
+  <!-- Loading State -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loader-container">
+      <div class="loader"></div>
+      <p>Synchronizing Sales Intelligence...</p>
+    </div>
+  </div>
+
+  <!-- Ambient Background Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="dashboard-container">
+    <!-- Header Block -->
+    <header class="dashboard-header">
+      <div class="header-title-block">
+        <div class="brand-badge">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Live Intelligence</span>
+        </div>
+        <h1 class="header-title">International SIM Sales Dashboard</h1>
+        <p class="header-subtitle">Daily sales performance for roaming SIM cards</p>
+      </div>
+      
+      <div class="header-control-block">
+        <label for="date-select" class="control-label">Report Date</label>
+        <div class="select-wrapper">
+          <input type="date" id="date-select" class="date-select" min="2026-01-01" max="2026-05-31">
+        </div>
+      </div>
+    </header>
+
+    <!-- KPI Grid -->
+    <section class="kpi-grid">
+      <!-- Card 1: Total SIMs Sold -->
+      <div class="kpi-card card-sims">
+        <div class="kpi-glow"></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Total SIMs Sold</span>
+          <h2 id="kpi-sims" class="kpi-value">-</h2>
+          <span id="kpi-sims-change" class="kpi-trend">-</span>
+        </div>
+        <div class="kpi-icon-wrapper">
+          <i class="fa-solid fa-sim-card"></i>
+        </div>
+      </div>
+
+      <!-- Card 2: Total Revenue -->
+      <div class="kpi-card card-revenue">
+        <div class="kpi-glow"></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Total Revenue</span>
+          <h2 id="kpi-revenue" class="kpi-value">-</h2>
+          <span id="kpi-revenue-change" class="kpi-trend">-</span>
+        </div>
+        <div class="kpi-icon-wrapper">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+      <!-- Card 3: Top Country -->
+      <div class="kpi-card card-country">
+        <div class="kpi-glow"></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Top Country</span>
+          <h2 id="kpi-country" class="kpi-value">-</h2>
+          <span id="kpi-country-change" class="kpi-trend">-</span>
+        </div>
+        <div class="kpi-icon-wrapper">
+          <i class="fa-solid fa-earth-asia"></i>
+        </div>
+      </div>
+
+      <!-- Card 4: Activation Success -->
+      <div class="kpi-card card-activation">
+        <div class="kpi-glow"></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Activation Success</span>
+          <h2 id="kpi-activation" class="kpi-value">-</h2>
+          <span id="kpi-activation-change" class="kpi-trend">-</span>
+        </div>
+        <div class="kpi-icon-wrapper">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sales Insight Box -->
+    <section class="insight-card">
+      <div class="insight-glow"></div>
+      <div class="insight-header">
+        <i class="fa-solid fa-wand-magic-sparkles insight-icon"></i>
+        <h3 class="card-title">Sales Insight</h3>
+      </div>
+      <p id="insight-body" class="insight-text">Loading insights...</p>
+    </section>
+
+    <!-- Grid Layout for Charts & Trend List -->
+    <div class="bottom-grid">
+      <!-- Left Column: Graph & Leaderboard -->
+      <div class="bottom-left-column">
+        <!-- Sales Performance Trend Graph -->
+        <section class="chart-card">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-chart-area"></i>
+            <h3 class="card-title">Sales Performance Trend</h3>
+          </div>
+          <div id="trend-chart" class="trend-chart-container"></div>
+        </section>
+
+        <!-- Top 10 Sales Leaderboard -->
+        <section class="leaderboard-card">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-trophy text-gold"></i>
+            <h3 class="card-title">Top 10 Reseller Leaderboard</h3>
+          </div>
+          <div id="leaderboard-list" class="leaderboard-list">
+            <!-- Dynamically populated top 10 agents -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Stacked Details -->
+      <div class="bottom-right-column">
+        <!-- Sales Trend Daily List -->
+        <section class="trend-card">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-list-check"></i>
+            <h3 class="card-title">Daily Sales List</h3>
+          </div>
+          <div id="trend-list" class="trend-list">
+            <!-- Dynamic trend list containing dates and horizontal progress bars -->
+          </div>
+        </section>
+
+        <!-- Top 5 Roaming Destinations -->
+        <section class="dest-card">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-earth-asia"></i>
+            <h3 class="card-title">Top 5 Roaming Countries</h3>
+          </div>
+          <div id="dest-list" class="dest-list">
+            <!-- Dynamically populated top 5 destinations -->
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Scripts -->
+  <script src="app.js?v=5"></script>
+</body>
+</html>
