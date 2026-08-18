@@ -18,6 +18,17 @@ filesToCopy.forEach(file => {
 });
 
 // 3. Write environment variables to config.json inside the dist folder
+console.log('--- Environment Variable Debugging ---');
+console.log('SUPABASE_URL present:', !!process.env.SUPABASE_URL);
+if (process.env.SUPABASE_URL) {
+  console.log('SUPABASE_URL length:', process.env.SUPABASE_URL.length);
+}
+console.log('SUPABASE_ANON_KEY present:', !!process.env.SUPABASE_ANON_KEY);
+if (process.env.SUPABASE_ANON_KEY) {
+  console.log('SUPABASE_ANON_KEY length:', process.env.SUPABASE_ANON_KEY.length);
+}
+console.log('--------------------------------------');
+
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
 
