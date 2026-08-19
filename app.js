@@ -136,7 +136,15 @@ function formatIndianRupees(val) {
 // Parse .env file
 async function loadEnv() {
   try {
-    // 1. Try to load config.json (used on Vercel deployment)
+    // 1. Try to load from window.config (defined by config.js script tag)
+    if (window.config && window.config.SUPABASE_URL && window.config.SUPABASE_ANON_KEY) {
+      supabaseUrl = window.config.SUPABASE_URL;
+      supabaseKey = window.config.SUPABASE_ANON_KEY;
+      console.log('Loaded credentials from window.config');
+      return;
+    }
+
+    // 2. Try to load config.json (used on Vercel deployment as fallback)
     try {
       const response = await fetch('config.json');
       if (response.ok) {
@@ -152,9 +160,9 @@ async function loadEnv() {
       console.log('config.json not found, falling back to local .env file');
     }
 
-    // 2. Fallback to reading .env (used for local development)
+    // 3. Fallback to reading .env (used for local development)
     const response = await fetch('.env');
-    if (!response.ok) throw new Error('Could not find config.json or .env file');
+    if (!response.ok) throw new Error('Could not find config.js, config.json or .env file');
     
     const text = await response.text();
     const env = {};
@@ -178,7 +186,7 @@ async function loadEnv() {
     console.log('Loaded credentials from local .env');
   } catch (error) {
     console.error('Error loading config:', error);
-    alert('Failed to load credentials from config.json or .env. Please check your setup.');
+    alert('Failed to load credentials from config.js, config.json or .env. Please check your setup.');
   }
 }
 

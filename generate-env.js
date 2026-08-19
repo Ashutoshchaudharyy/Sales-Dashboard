@@ -38,5 +38,9 @@ const config = {
 };
 
 fs.writeFileSync(path.join(distDir, 'config.json'), JSON.stringify(config, null, 2));
-console.log('Generated dist/config.json successfully!');
+
+const configJsContent = `window.config = ${JSON.stringify(config, null, 2)};\n`;
+fs.writeFileSync(path.join(distDir, 'config.js'), configJsContent);
+console.log('Generated dist/config.json and dist/config.js successfully!');
 console.log('Build completed successfully!');
+
