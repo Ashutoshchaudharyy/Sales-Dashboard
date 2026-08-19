@@ -234,6 +234,11 @@ body {
   transition: var(--transition-fast);
 }
 
+.date-select::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
 .date-select:hover {
   border-color: rgba(255, 255, 255, 0.15);
 }
