@@ -253,6 +253,21 @@ body {
   pointer-events: none;
 }
 
+.select-calendar-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 14px;
+  pointer-events: none;
+  transition: var(--transition-fast);
+}
+
+.date-select:hover + .select-calendar-icon {
+  color: var(--color-cyan);
+}
+
 /* KPI Grid */
 .kpi-grid {
   display: grid;

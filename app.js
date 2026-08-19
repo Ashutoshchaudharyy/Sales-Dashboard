@@ -65,6 +65,15 @@ function setupEventListeners() {
   dateSelect.addEventListener('change', (e) => {
     updateDashboard(e.target.value);
   });
+  
+  // Trigger native datepicker calendar when clicking anywhere on the input block
+  dateSelect.addEventListener('click', () => {
+    try {
+      dateSelect.showPicker();
+    } catch (e) {
+      console.log('showPicker not supported:', e);
+    }
+  });
 }
 
 function initChart() {
