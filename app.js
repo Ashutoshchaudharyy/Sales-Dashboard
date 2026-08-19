@@ -186,7 +186,7 @@ async function loadEnv() {
     console.log('Loaded credentials from local .env');
   } catch (error) {
     console.error('Error loading config:', error);
-    alert('Failed to load credentials from config.js, config.json or .env. Please check your setup.');
+    alert('Configuration Error: Supabase URL or Key is missing. If this is a Vercel deployment, please ensure you have added the SUPABASE_URL and SUPABASE_ANON_KEY environment variables in your Vercel Project Settings, then trigger a redeploy.');
   }
 }
 
